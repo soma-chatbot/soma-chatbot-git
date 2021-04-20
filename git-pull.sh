@@ -1,3 +1,4 @@
+echo "Move directory"
 cd /workspace/soma-chat-bot-team30
-su unknownpgr
-git pull origin master
+echo "Change user and pull remote repository"
+runuser -u unknownpgr -- git pull origin master
