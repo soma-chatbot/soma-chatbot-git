@@ -15,13 +15,13 @@ app.get('/git/pull', async (req, res) => {
 	console.log('Git pull requested.');
 	try {
 		const { stdout, stderr } = await exec(path.join(__dirname, 'git-pull.sh'));
-		console.log('Git pulled : ');
 		console.log(stdout);
 		console.log(stderr);
+		console.log('Git pulled : ');		
 	} catch (e) {
-		console.log('Error occurred.');
 		console.log(e.stdout);
 		console.log(e.stderr);
+		console.log('Error occurred.');
 		res.send({status:'Err'});
 		return;
 	}
