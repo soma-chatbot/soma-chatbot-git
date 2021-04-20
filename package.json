@@ -1,0 +1,23 @@
+{
+  "name": "soma-chat-bot-team30",
+  "version": "1.0.0",
+  "description": "Software Maestro chatbot project",
+  "main": "main.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:soma-chatbot/soma-chatbot-git.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/soma-chatbot/soma-chatbot-git/issues"
+  },
+  "homepage": "https://github.com/soma-chatbot/soma-chatbot-git#readme"
+}
