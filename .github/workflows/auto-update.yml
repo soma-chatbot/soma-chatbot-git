@@ -1,11 +1,13 @@
-name: Github blog auto update
+name: Chatbot repository auto update
 
 on:
   push:
     branches: [master]
 
 jobs:
-  update:
+  auto-update:
+    name: Request pull
     runs-on: ubuntu-latest
-      - name: Request pull
+    steps:
+      - name: Request pull to container server
         run: https://soma-chatbot-team30.run.goorm.io/git/pull
