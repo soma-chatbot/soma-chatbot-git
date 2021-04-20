@@ -12,7 +12,6 @@ app.get('/', (req, res) => {
 });
 
 app.get('/git/pull', async (req, res) => {
-	res.send({ status: 'OK' });
 	console.log('Git pull requested.');
 	try {
 		const { stdout, stderr } = await exec(path.join(__dirname, 'git-pull.sh'));
