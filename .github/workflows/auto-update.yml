@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Request pull to container server
-        run: https://soma-chatbot-team30.run.goorm.io/git/pull
+        run: curl https://soma-chatbot-team30.run.goorm.io/git/pull
