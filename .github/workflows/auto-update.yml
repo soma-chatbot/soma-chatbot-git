@@ -1,0 +1,11 @@
+name: Github blog auto update
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+      - name: Request pull
+        run: https://soma-chatbot-team30.run.goorm.io/git/pull

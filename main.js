@@ -11,12 +11,16 @@ app.get('/',(req,res)=>{
 
 app.get('/git/pull',async (req,res)=>{
 	res.send({status:'OK'});
+	console.log('Git pull requested.')
 	try{
 	 const { stdout, stderr } =	await exec(path.join(__dirname, 'git-pull.sh'));
 		console.log('Git pulled : ')
 		console.log(stdout);
-	}catch{
-		console.log('ERR')
+		console.log(stderr);
+	}catch(e){
+		console.log('Error occurred.')
+		console.log(e.stdout);
+		console.log(e.stderr);
 	}
 })
 
