@@ -11,13 +11,13 @@ app.get('/', (req, res) => {
 	res.send(path.join(__dirname, 'public', 'index.js'));
 });
 
-app.get('/git/pull', async (req, res) => {
+app.post('/git/pull', async (req, res) => {
 	console.log('Git pull requested.');
 	try {
 		const { stdout, stderr } = await exec(path.join(__dirname, 'git-pull.sh'));
 		console.log(stdout);
 		console.log(stderr);
-		console.log('Git pulled : ');		
+		console.log('Git pull finished.');		
 	} catch (e) {
 		console.log(e.stdout);
 		console.log(e.stderr);
