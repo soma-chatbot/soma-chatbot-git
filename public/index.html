@@ -11,6 +11,20 @@
             max-width: 800px;
             margin: 3rem auto 3rem auto;
         }
+
+        input {
+            display: block;
+        }
+
+        #blocks {
+            width: 100%;
+            height: 500px;
+        }
+
+        #log {
+            width: 100%;
+            height: 64px;
+        }
     </style>
 </head>
 
@@ -20,38 +34,37 @@
         <p>
             이 페이지는 소프트웨어 마에스트로 챗봇 미티프로젝트 팀 30 테스트 페이지입니다.
         </p>
-        <h2>
-            Members
-        </h2>
-        <p>
-        <ul>
-            <li> 권준호 : 팀장</li>
-            <li> 김영배</li>
-            <li> 박유천</li>
-            <li> 이도원</li>
-            <li> 정용훈</li>
-            <li> 황희영</li>
-        </ul>
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam ullam dolore est excepturi qui natus ipsum
-            eos sed laudantium quod. Magnam deserunt atque voluptatem dolorem aliquam sequi placeat. Perferendis quas,
-            excepturi alias magni explicabo similique dolore minus consequuntur doloribus rem, quo doloremque eveniet,
-            aspernatur in veritatis ut laudantium sequi iure praesentium? Fugit error dolorem ducimus quaerat impedit in
-            pariatur. Voluptatibus magni impedit exercitationem similique eaque doloremque velit doloribus, voluptas
-            sequi fugit minus incidunt deleniti dignissimos dolorem sint explicabo. Laborum aperiam voluptatem sapiente
-            exercitationem sint impedit quo fugit dignissimos repellendus eveniet corrupti nostrum harum tenetur ipsum
-            labore dolores odit, doloremque in.
-        </p>
-
-        <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur accusantium officiis exercitationem
-            facilis qui culpa! Totam voluptatum repellendus eligendi eveniet officiis dolorem sapiente velit, fugiat,
-            quis, quibusdam commodi sit cupiditate beatae animi voluptates. Beatae quasi asperiores, ducimus ad officia
-            impedit quis qui sit quo unde cumque id doloremque expedita numquam.
-        </p>
+        <div>
+            <label for="username">유저 이름</label>
+            <input type="text" id="username">
+        </div>
+        <div>
+            <label for="blocks">블럭</label>
+            <textarea type="text" id="blocks"></textarea>
+        </div>
+        <div>
+            <button onclick="submitMsg(event)">전송</button>
+        </div>
+        <div>
+            <textarea id="log" disabled> </textarea>
+        </div>
     </div>
 
+    <script>
+        async function submitMsg(e) {
+            log.innerHTML = ''
+            const res = await fetch('./test', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username: username.value, blocks: blocks.value })
+            });
+            const content = await res.text();
+            log.innerText = content;
+        }
+    </script>
 </body>
 
 </html>

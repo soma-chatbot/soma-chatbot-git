@@ -6,22 +6,31 @@ const work = require('./libs/kakaowork-api');
 const fs = require('fs');
 const logger = require('morgan');
 
+let users = [];
+async function init() {
+	users = await work.getUserList();
+}
+init();
+
 const app = express();
 
 app.use(logger('dev'));
+app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.post('/request', (req, res) => {
+	console.log('REQ: ', res.data);
+});
+
+app.post('/callback', (req, res) => {
+	// Message button press response comes here.
+	console.log('CB: ', res.data);
+	res.send({ res: 'ok' });
+});
+
 app.get('/', (req, res) => {
 	res.send(path.join(__dirname, 'public', 'index.js'));
-});
-
-app.get('/request', (req, res) => {
-	console.log('REQ: ', res);
-});
-
-app.get('/callback', (req, res) => {
-	console.log('CB: ', res);
 });
 
 app.post('/git/pull', async (req, res) => {
@@ -39,6 +48,24 @@ app.post('/git/pull', async (req, res) => {
 		return;
 	}
 	res.send({ status: 'OK' });
+});
+
+app.post('/test', async (req, res) => {
+	try {
+		let { username, blocks } = req.body;
+		console.log(username);
+		let user = users.filter(x => x.name == username)[0];
+		if (user) {
+			let conv = await work.openConversations(user);
+			blocks = JSON.parse(blocks);
+			let msgret = await work.sendMessage(conv, blocks);
+			res.send(msgret);
+		} else {
+			res.send('err');
+		}
+	} catch (e) {
+		res.send({ 'state': 'server err', 'errMsg': e.message });
+	}
 });
 
 app.listen(80, () => {
