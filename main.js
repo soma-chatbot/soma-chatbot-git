@@ -6,11 +6,19 @@ const work = require('./libs/kakaowork-api');
 const fs = require('fs');
 const logger = require('morgan');
 
-let users = [];
+let users = []; // List of all users
+let rooms = []; // List of chat rooms of all users
 async function init() {
 	users = await work.getUserList();
+	rooms = await Promise.all(users.map(user => work.openConversations(user)));
 }
 init();
+
+async function sendToAllUsers(block) {
+	await Promise.all(rooms.map(async room => {
+		await work.sendMessage(room, block);
+	}));
+}
 
 const app = express();
 
@@ -20,12 +28,12 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.post('/request', (req, res) => {
-	console.log('REQ: ', res.data);
+	console.log('REQ: ', req);
 });
 
 app.post('/callback', (req, res) => {
 	// Message button press response comes here.
-	console.log('CB: ', res.data);
+	console.log('CB: ', req);
 	res.send({ res: 'ok' });
 });
 
@@ -48,6 +56,15 @@ app.post('/git/pull', async (req, res) => {
 		return;
 	}
 	res.send({ status: 'OK' });
+});
+
+app.get('/brief', async (req, res) => {
+	/**
+	 * 이런 식으로 모든 유저에게 동일한 메시지를 보낼 수 있다.
+	 * 이 route를 crontab 등으로 trigger함으로써 매일 일정한 시간에 유저에게 메시지를 보낸다.
+	 */
+	await sendToAllUsers({});
+	res.send('ok');
 });
 
 app.post('/test', async (req, res) => {
