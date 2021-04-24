@@ -28,12 +28,15 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.post('/request', (req, res) => {
-	console.log('REQ: ', req);
+	let { body } = req;
+	console.log('REQ: ', body);
+	res.send({ res: 'ok' });
 });
 
 app.post('/callback', (req, res) => {
 	// Message button press response comes here.
-	console.log('CB: ', req);
+	let { body } = req;
+	console.log('CB: ', body);
 	res.send({ res: 'ok' });
 });
 
