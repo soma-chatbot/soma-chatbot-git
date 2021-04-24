@@ -61,10 +61,10 @@ app.post('/test', async (req, res) => {
 			let msgret = await work.sendMessage(conv, blocks);
 			res.send(msgret);
 		} else {
-			res.send('err');
+			res.send('그런 유저가 없습니다.');
 		}
 	} catch (e) {
-		res.send({ 'state': 'server err', 'errMsg': e.message });
+		res.send({ 'state': '서버 내부 에러 발생', 'errMsg': e.message });
 	}
 });
 
