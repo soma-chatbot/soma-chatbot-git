@@ -1,5 +1,29 @@
-module.exports = {
-	getBrief: () => {
+const fs = require('fs').promises;
+const path = require('path');
+
+const read = fs.readFile;
+
+const files = {
+	covid: 'covid.json',
+	news: 'news.json',
+	air: 'air.json',
+	weather: 'weather.json'
+};
+const data = {};
+
+async function updateData() {
+	const ps = Object.entries(files).map(async ([key, value]) => {
+		const dataPath = path.join(__dirname, '../../crawlers', value);
+		const content = await read(dataPath, { encoding: 'utf-8' });
+		data[key] = JSON.parse(content).data;
+	});
+	await Promise.all(ps);
+}
+updateData();
+
+const template = {
+	getBrief: async () => {
+		await updateData();
 		return {
 			"blocks": [
 				{
@@ -135,5 +159,117 @@ module.exports = {
 				}
 			]
 		};
+	},
+
+	getCovid: async () => {
+		await updateData();
+		return {
+			"text": "Push alarm message",
+			"blocks": [
+				{
+					"type": "image_link",
+					"url": "https://ifh.cc/g/3LTuUo.png"
+				},
+				{
+					"type": "text",
+					"text": "　　　　　*일일 확진자*",
+					"markdown": true
+				},
+				{
+					"type": "description",
+					"term": "국내발생",
+					"content": {
+						"type": "text",
+						"text": data.covid.inside,
+						"markdown": true
+					},
+					"accent": true
+				},
+				{
+					"type": "description",
+					"term": "해외유입",
+					"content": {
+						"type": "text",
+						"text": data.covid.outside,
+						"markdown": false
+					},
+					"accent": true
+				},
+				{
+					"type": "divider"
+				},
+				{
+					"type": "text",
+					"text": "　　　　　*국내 현황*",
+					"markdown": true
+				},
+				{
+					"type": "description",
+					"term": "확진환자",
+					"content": {
+						"type": "text",
+						"text": data.covid.coronic,
+						"markdown": true
+					},
+					"accent": true
+				},
+				{
+					"type": "description",
+					"term": "검사중",
+					"content": {
+						"type": "text",
+						"text": data.covid.check,
+						"markdown": false
+					},
+					"accent": true
+				},
+				{
+					"type": "description",
+					"term": "격리해제",
+					"content": {
+						"type": "text",
+						"text": data.covid.free,
+						"markdown": true
+					},
+					"accent": true
+				},
+				{
+					"type": "description",
+					"term": "사망",
+					"content": {
+						"type": "text",
+						"text": data.covid.death,
+						"markdown": false
+					},
+					"accent": true
+				},
+				{
+					"type": "divider"
+				},
+				{
+					"type": "action",
+					"elements": [
+						{
+							"type": "button",
+							"text": "COVID-19 이동",
+							"style": "default",
+							"action_type": "open_inapp_browser",
+							"action_name": "go-fine-dust-site",
+							"value": "http://ncov.mohw.go.kr/"
+						},
+						{
+							"type": "button",
+							"text": "챗봇 부르기",
+							"style": "primary",
+							"action_type": "submit_action",
+							"action_name": "call-chat-bot",
+							"value": ""
+						}
+					]
+				}
+			]
+		};
 	}
-}
+};
+
+module.exports = template;

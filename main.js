@@ -3,7 +3,6 @@ const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 const path = require('path');
 const work = require('./libs/kakaowork-api');
-const fs = require('fs');
 const logger = require('morgan');
 
 let users = []; // List of all users
