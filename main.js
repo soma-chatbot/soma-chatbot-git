@@ -22,7 +22,7 @@ async function sendToAllUsers(block) {
 
 const app = express();
 
-app.use(logger('dev'));
+app.use(logger(':remote-addr - :remote-user [:date[iso]] ":method :url HTTP/:http-version" :status :res[content-length]'));
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'public')));
