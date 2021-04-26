@@ -35,31 +35,35 @@ app.post('/request', (req, res) => {
 app.post('/callback', async (req, res) => {
 	// Message button press response comes here.
 	let { body } = req;
-	let conversation_id = body.message.conversation_id;
+	let id = body.message.conversation_id;
 	let action = body.action_name;
 	switch (action) {
 		case 'corona':
 			{
-				let blocks = template.getCovid();
-				await work.sendMessage({ conversation_id }, blocks);
+				let blocks = await template.getCovid();
+				let msgret = await work.sendMessage({ id }, blocks);
+				console.log(msgret);
 				break;
 			}
 		case 'news':
 			{
-				let blocks = template.getNews();
-				await work.sendMessage({ conversation_id }, blocks);
+				let blocks = await template.getNews();
+				let msgret = await work.sendMessage({ id }, blocks);
+				console.log(msgret);
 				break;
 			}
 		case 'finedust':
 			{
-				let blocks = template.getAir();
-				await work.sendMessage({ conversation_id }, blocks);
+				let blocks = await template.getAir();
+				let msgret = await work.sendMessage({ id }, blocks);
+				console.log(msgret);
 				break;
 			}
 		case 'weather':
 			{
-				let blocks = template.getWeather();
-				await work.sendMessage({ conversation_id }, blocks);
+				let blocks = await template.getWeather();
+				let msgret = await work.sendMessage({ id }, blocks);
+				console.log(msgret);
 				break;
 			}
 	}
