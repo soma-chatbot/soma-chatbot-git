@@ -13,12 +13,6 @@ def create_soup(url):  # url --> soup
     return soup
 
 
-def print_news(index, title, link):  # 출력 함수
-    # print("{}. {}".format(index+1, title))
-    # print(" (링크 : {})".format(link))
-    return
-
-
 # 헤드라인 뉴스
 def scrape_headline_news():
     # print("[헤드라인 뉴스]")
@@ -35,87 +29,102 @@ def scrape_headline_news():
             "title": title,
             "link": link
         })
-        # print_news(index, title, link)
-    # print()
     return result
 
 
 # 정치 속보
 def scrape_politics_news():
-    # print("[정치 뉴스]")
     result = []
-    url = "https://news.naver.com"
+    # print("[정치 뉴스]")
+    url = "https://news.naver.com/main/list.nhn?mode=LSD&mid=sec&sid1=100"
     soup = create_soup(url)
-    news_list = soup.find("div", id="section_politics").find_all("li", limit=3)
-
+    news_list = soup.find(
+        "ul", attrs={"class": "type06_headline"}).find_all("li", limit=20)
+    count = 0
     for index, news in enumerate(news_list):
+        if count == 3:
+            break
+
         img = news.find("img")
-        a_indx = 0
-        if img:
-            a_indx = 1
+        if img is None:
+            continue
+
+        a_indx = 1
+        src = img.get("src")
+        count = count + 1
         title = news.find_all("a")[a_indx].get_text().strip()
         link = news.find_all("a")[a_indx]["href"]
         result.append({
             "title": title,
-            "link": link
+            "link": link,
+            "img_src": src
         })
     return result
 
 
 # 경제 속보
 def scrape_economy_news():
-    # print("[경제 뉴스]")
     result = []
-    url = "https://news.naver.com"
+    url = "https://news.naver.com/main/list.nhn?mode=LSD&mid=sec&sid1=101"
     soup = create_soup(url)
-    news_list = soup.find("div", id="section_economy").find_all("li", limit=3)
-
+    news_list = soup.find(
+        "ul", attrs={"class": "type06_headline"}).find_all("li", limit=20)
+    count = 0
     for index, news in enumerate(news_list):
+        if count == 3:
+            break
+
         img = news.find("img")
-        a_indx = 0
-        if img:
-            a_indx = 1
+        if img is None:
+            continue
+
+        a_indx = 1
+        src = img.get("src")
+        count = count + 1
         title = news.find_all("a")[a_indx].get_text().strip()
         link = news.find_all("a")[a_indx]["href"]
         result.append({
             "title": title,
-            "link": link
+            "link": link,
+            "img_src": src
         })
-        # print_news(index, title, link)
-    # print()
     return result
+
 
 # IT 속보
-
-
 def scrape_it_news():
-    # print("[IT 뉴스]")
     result = []
-    url = "https://news.naver.com"
+    # print("[IT 뉴스]")
+    url = "https://news.naver.com/main/list.nhn?mode=LSD&mid=sec&sid1=105"
     soup = create_soup(url)
-    news_list = soup.find("div", id="section_it").find_all("li", limit=3)
-
+    news_list = soup.find(
+        "ul", attrs={"class": "type06_headline"}).find_all("li", limit=20)
+    count = 0
     for index, news in enumerate(news_list):
+        if count == 3:
+            break
+
         img = news.find("img")
-        a_indx = 0
-        if img:
-            a_indx = 1
+        if img is None:
+            continue
+
+        a_indx = 1
+        src = img.get("src")
+        count = count + 1
         title = news.find_all("a")[a_indx].get_text().strip()
         link = news.find_all("a")[a_indx]["href"]
         result.append({
             "title": title,
-            "link": link
+            "link": link,
+            "img_src": src
         })
-        # print_news(index, title, link)
-    # print()
     return result
 
 
-# 함수 실행
-if __name__ == '__main__':
+if __name__ == "__main__":
     result = {
         "result": "success",
-        "msg": "The crawl has been successfully completed.",
+        "msg": "성공적으로 크롤링이 완료되었습니다.",
         "data": {}
     }
 

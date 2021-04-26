@@ -41,8 +41,8 @@ app.post('/callback', async (req, res) => {
 
 	async function send(typeStr) {
 		let blocks = await template['get' + typeStr]();
-				let msgret = await work.sendMessage({ id }, blocks);
-				console.log(msgret);
+		let msgret = await work.sendMessage({ id }, blocks);
+		console.log(msgret);
 	}
 
 	console.log(action);
@@ -50,20 +50,20 @@ app.post('/callback', async (req, res) => {
 	switch (action) {
 		case 'corona':
 			await send('Covid');
-				break;
+			break;
 		case 'news':
 			await send('News');
-				break;
+			break;
 		case 'finedust':
 			await send('Air');
-				break;
+			break;
 		case 'weather':
 			await send('Weather');
-				break;
+			break;
 		case 'call-chat-bot':
 			await send('Brief');
 			break;
-			}
+	}
 	res.send({ res: 'ok' });
 });
 
@@ -113,6 +113,36 @@ app.post('/test', async (req, res) => {
 	} catch (e) {
 		res.send({ 'state': '서버 내부 에러 발생', 'errMsg': e.message });
 	}
+});
+
+app.get('/testModules', async (req, res) => {
+	// try{
+	// 	let user = users.filter(x => x.name == '황희영')[0];
+	// 	let conv = await work.openConversations(user);
+	// 	let blk = await template.getCovid()
+	// 	console.log(blk);
+	// 	if (user){
+	// 		let msgRet = await work.sendMessage(conv, blk);
+	// 		res.send(msgRet);
+	// 	} else {throw err}
+	// }
+	// catch (err){
+	// 	console.log(err.message)
+	// }
+	let blk = await template.getBrief();
+	await sendToAllUsers(blk);
+
+	blk = await template.getCovid();
+	await sendToAllUsers(blk);
+
+	blk = await template.getNews();
+	await sendToAllUsers(blk);
+
+	blk = await template.getWeather();
+	await sendToAllUsers(blk);
+
+	blk = await template.getAir();
+	await sendToAllUsers(blk);
 });
 
 app.listen(80, () => {
