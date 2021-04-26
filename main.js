@@ -45,6 +45,8 @@ app.post('/callback', async (req, res) => {
 				console.log(msgret);
 	}
 
+	console.log(action);
+
 	switch (action) {
 		case 'corona':
 			await send('Covid');
@@ -58,6 +60,9 @@ app.post('/callback', async (req, res) => {
 		case 'weather':
 			await send('Weather');
 				break;
+		case 'call-chat-bot':
+			await send('Brief');
+			break;
 			}
 	res.send({ res: 'ok' });
 });
