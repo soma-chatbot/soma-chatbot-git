@@ -583,11 +583,11 @@ const template = {
 					elements: [
 						{
 							type: 'button',
-							text: '기상청 이동',
+							text: '네이버 날씨 이동',
 							style: 'default',
 							action_type: 'open_inapp_browser',
 							action_name: 'go-forecast-site',
-							value: '',
+							value: weather.url,
 						},
 						{
 							type: 'button',
@@ -638,12 +638,12 @@ const template = {
 				},
 				{
 					type: 'text',
-					text: '⬇ 가장 적은 시간　　　　13시',
+					text: `⬇ 가장 적은 시간　　　　${air.lowest_ultra_micro_dust.hour}`,
 					markdown: true,
 				},
 				{
 					type: 'text',
-					text: '⬆ 가장 많은 시간　　　　17시',
+					text: `⬆ 가장 많은 시간　　　　${air.highest_ultra_micro_dust.hour}`,
 					markdown: true,
 				},
 				{
@@ -662,11 +662,11 @@ const template = {
 					elements: [
 						{
 							type: 'button',
-							text: '기상청 이동',
+							text: '한국환경공단 이동',
 							style: 'default',
 							action_type: 'open_inapp_browser',
 							action_name: 'go-fine-dust-site',
-							value: '',
+							value: 'https://www.keco.or.kr/kr/main/index.do',
 						},
 						{
 							type: 'button',
