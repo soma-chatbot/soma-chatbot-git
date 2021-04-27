@@ -25,6 +25,7 @@ const template = {
 	getBrief: async () => {
 		await updateData();
 		return {
+			text: "모닝 브리핑이 도착했습니다!",
 			blocks: [
 				{
 					type: 'image_link',
@@ -202,7 +203,7 @@ const template = {
 	getCovid: async () => {
 		await updateData();
 		return {
-			text: 'Push covid message',
+			text: '코로나 현황 안내',
 			blocks: [
 				{
 					type: 'image_link',
@@ -313,7 +314,7 @@ const template = {
 		await updateData();
 		let news = data.news;
 		return {
-			text: 'Push alarm message',
+			text: '뉴스 헤드라인 안내',
 			blocks: [
 				{
 					type: 'image_link',
@@ -480,7 +481,7 @@ const template = {
 		await updateData();
 		let weather = data.weather;
 		return {
-			text: 'Push alarm message',
+			text: '오늘의 날씨 안내',
 			blocks: [
 				{
 					type: 'image_link',
@@ -607,7 +608,7 @@ const template = {
 		await updateData();
 		let air = data.air;
 		return {
-			text: 'Push alarm message',
+			text: '오늘의 미세먼지 안내',
 			blocks: [
 				{
 					type: 'image_link',
