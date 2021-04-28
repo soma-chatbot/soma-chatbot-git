@@ -15,13 +15,7 @@ def find_key(dict, val):
 
 
 def get_today_air(rlg):  # rlg(Regional Local Government): 지역 이름
-    result = {
-        'result': '',
-        'msg': '',
-        'data': {}
-    }
-
-    data = result['data']
+    data = {}
 
     # Check RLG
     location_code = rlg
@@ -31,10 +25,7 @@ def get_today_air(rlg):  # rlg(Regional Local Government): 지역 이름
 
     # Check response status
     if response.status_code != 200:
-        result['result'] = 'error'
-        result['msg'] = f'Failed to load page. : {response.status_code}'
-        print(json.dumps(result))
-        return
+        raise Exception(f'Failed to load page. : {response.status_code}')
 
     html = response.text
     soup = BeautifulSoup(html, 'html.parser')
@@ -59,6 +50,10 @@ def get_today_air(rlg):  # rlg(Regional Local Government): 지역 이름
         'ultra_micro_dust': {
             'selector': '#_idDustChart > div:nth-child(2) > span',
             'regex': '[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{2,4}'
+        },
+        'update_date': {
+            'selector': 'div.card.card_dust > p',
+            'regex': '[0-9]{1,2}[:][0-9]{1,2}'
         }
     }
 
@@ -80,10 +75,7 @@ def get_today_air(rlg):  # rlg(Regional Local Government): 지역 이름
         f'https://weather.naver.com/air/api/airTrend?regionCode={location_code}&trendType=hourly')
 
     if res.status_code != 200:
-        result['result'] = 'error'
-        result['msg'] = f'Failed to load page. : {res.status_code}'
-        print(json.dumps(result))
-        return
+        raise Exception('Status code is not 200')
 
     now = datetime.now().strftime('%Y%m%d')
     timeline_list = json.loads(res.text)
@@ -142,19 +134,36 @@ def get_today_air(rlg):  # rlg(Regional Local Government): 지역 이름
         if cnt == 24:
             break
 
-    # Done
-    result['result'] = 'success'
-
-    if failure_items:
-        result['msg'] = f'{len(failure_items)} elements could not be imported. :{", ".join(failure_items)}'
-        data['failure_items'] = failure_items
-    else:
-        result['msg'] = 'The crawl has been successfully completed.'
-
     # Return
-    print(json.dumps(result))
-    return
+    return data
+
+
+locationCodeList = [
+    '09140550',
+    '08470690',
+    '11200510',
+    '06110517',
+    '05140120',
+    '07170630',
+    '10140510',
+    '17110250',
+    '02830410',
+    '01810350',
+    '16760370',
+    '15810320',
+    '13750360',
+    '12790330',
+    '04170400',
+    '03720415',
+    '14110630'
+]
 
 
 if __name__ == '__main__':
-    get_today_air(sys.argv[1])
+    result = {'data': {}}
+    for code in locationCodeList:
+        result['data'][code] = get_today_air(code)
+    result['result'] = 'success'
+    result['msg'] = '성공적으로 크롤링이 완료되었습니다.'
+
+    print(json.dumps(result))

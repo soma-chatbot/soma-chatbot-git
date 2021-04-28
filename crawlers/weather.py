@@ -15,13 +15,7 @@ def find_key(dict, val):
 # 오늘의 날씨
 # 현재 기온, 하늘상태, 습도, 강수확률 (강조), 체감온도, 최저, 최고기온
 def get_today_weather(rlg):  # rlg(Regional Local Government): 지역 이름
-    result = {
-        'result': '',
-        'msg': '',
-        'data': {}
-    }
-
-    data = result['data']
+    data = {}
 
     # Check RLG
     location_code = rlg
@@ -31,10 +25,7 @@ def get_today_weather(rlg):  # rlg(Regional Local Government): 지역 이름
 
     # Check response status
     if response.status_code != 200:
-        result['result'] = 'error'
-        result['msg'] = f'Failed to load page.: {response.status_code}'
-        print(json.dumps(result))
-        return
+        raise Exception(f'Failed to load page. : {response.status_code}')
 
     html = response.text
     soup = BeautifulSoup(html, 'html.parser')
@@ -98,6 +89,10 @@ def get_today_weather(rlg):  # rlg(Regional Local Government): 지역 이름
         'lowest_temperature': {
             'selector': '.data.lowest',
             'regex': '-*[0-9]{1,3}[°]'
+        },
+        'update_date': {
+            'selector': 'div.time_weather > div.top_area > span',
+            'regex': '[0-9]{1,2}[:][0-9]{1,2}'
         }
     }
 
@@ -114,23 +109,35 @@ def get_today_weather(rlg):  # rlg(Regional Local Government): 지역 이름
             failure_items.append(name)
             data[name] = None
 
-    # Done
-    result['result'] = 'success'
+    return data
 
-    if failure_items:
-        result['msg'] = f'{len(failure_items)} elements could not be imported. :{", ".join(failure_items)}'
-        data['failure_items'] = failure_items
-    else:
-        result['msg'] = 'The crawl has been successfully completed.'
 
-    # Return
-    print(json.dumps(result))
-    return
+locationCodeList = [
+    '09140550',
+    '08470690',
+    '11200510',
+    '06110517',
+    '05140120',
+    '07170630',
+    '10140510',
+    '17110250',
+    '02830410',
+    '01810350',
+    '16760370',
+    '15810320',
+    '13750360',
+    '12790330',
+    '04170400',
+    '03720415',
+    '14110630'
+]
 
 
 if __name__ == '__main__':
-    rlg = sys.argv[1]
-    if not rlg:
-        rlg = '서울특별시'
+    result = {'data': {}}
+    for code in locationCodeList:
+        result['data'][code] = get_today_weather(code)
+    result['result'] = 'success'
+    result['msg'] = '성공적으로 크롤링이 완료되었습니다.'
 
-    get_today_weather(rlg)
+    print(json.dumps(result))
