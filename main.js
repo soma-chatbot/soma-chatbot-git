@@ -57,7 +57,6 @@ app.post('/request', async (req, res) => {
 app.post('/callback', async (req, res) => {
 	// Message button press response comes here.
 	let { body } = req;
-	console.log(body);
 
 	let userID = body.react_user_id;;
 	let roomID = body.message.conversation_id;
@@ -69,13 +68,9 @@ app.post('/callback', async (req, res) => {
 
 	async function send(...args) {
 		let [typeStr, ...params] = args;
-		console.log(typeStr, params, template['get' + typeStr]);
 		let blocks = await template['get' + typeStr](...params);
 		let msgret = await work.sendMessage({ id: roomID }, blocks);
-		console.log(msgret);
 	}
-
-	console.log(userID, action);
 
 	switch (action) {
 		case 'corona':
@@ -97,7 +92,6 @@ app.post('/callback', async (req, res) => {
 			let location = body.actions['area-select'];
 			let day = body.actions['day-select'];
 			userSetting[userID] = { ...userSetting[userID], location, day };
-			console.log(userSetting);
 			let settingStr = JSON.stringify(userSetting);
 			fs.writeFile(SETTING_FILE_PATH, settingStr);
 			break;
