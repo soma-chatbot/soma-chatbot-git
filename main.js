@@ -17,9 +17,18 @@ async function init() {
 	users = await work.getUserList();
 	rooms = await Promise.all(users.map(user => work.openConversations(user)));
 
+	// Initialize user setting
+	users.forEach(user => {
+		userSetting[user.id] = {
+			location: '09140550',
+			day: 1
+		};
+	});
+
+	// If user setting file already exists, override it.
 	try {
 		const settingJSONStr = await fs.readFile(SETTING_FILE_PATH);
-		userSetting = JSON.stringify(settingJSONStr);
+		userSetting = { ...userSetting, ...JSON.stringify(settingJSONStr) };
 	} catch (_) {
 
 	}
@@ -50,17 +59,18 @@ app.post('/callback', async (req, res) => {
 	let { body } = req;
 	console.log(body);
 
-	let userID = body.message.user_id;
+	let userID = body.react_user_id;;
 	let roomID = body.message.conversation_id;
 	let action = body.action_name;
 
 	if (body.type == 'submission') {
 		action = 'submission';
-		userID = body.react_user_id;
 	}
 
-	async function send(typeStr) {
-		let blocks = await template['get' + typeStr]();
+	async function send(...args) {
+		let [typeStr, ...params] = args;
+		console.log(typeStr, params, template['get' + typeStr]);
+		let blocks = await template['get' + typeStr](...params);
 		let msgret = await work.sendMessage({ id: roomID }, blocks);
 		console.log(msgret);
 	}
@@ -75,24 +85,23 @@ app.post('/callback', async (req, res) => {
 			await send('News');
 			break;
 		case 'finedust':
-			await send('Air');
+			await send('Air', userSetting[userID].location);
 			break;
 		case 'weather':
-			await send('Weather');
+			await send('Weather', userSetting[userID].location);
 			break;
 		case 'call-chat-bot':
-			await send('Brief');
+			await send('Brief', userSetting[userID].location);
 			break;
 		case 'submission':
 			let location = body.actions['area-select'];
-			let day = body.actions['day_select'];
+			let day = body.actions['day-select'];
 			if (!userSetting[userID]) {
 				userSetting[userID] = {};
 			}
 			userSetting[userID] = { ...userSetting[userID], location, day };
 			console.log(userSetting);
 			let settingStr = JSON.stringify(userSetting);
-			console.log(settingStr);
 			fs.writeFile(SETTING_FILE_PATH, settingStr);
 			break;
 	}
@@ -170,7 +179,7 @@ app.get('/summonBot/:name', async (req, res) => {
 		let user = users.filter(x => x.name == req.params.name)[0];
 		if (user) {
 			let conv = await work.openConversations(user);
-			let msgRet = await work.sendMessage(conv, await template.getBrief());
+			let msgRet = await work.sendMessage(conv, await template.getBrief(userSetting[user.id].location));
 			res.send(msgRet);
 		} else {
 			res.send('그런 유저가 없습니다.');

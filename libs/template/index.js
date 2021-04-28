@@ -1,8 +1,6 @@
 const fs = require('fs').promises;
 const path = require('path');
 
-const read = fs.readFile;
-
 const files = {
 	covid: 'covid.json',
 	news: 'news.json',
@@ -14,7 +12,7 @@ const data = {};
 async function updateData() {
 	const ps = Object.entries(files).map(async ([key, value]) => {
 		const dataPath = path.join(__dirname, '../../crawlers', value);
-		const content = await read(dataPath, { encoding: 'utf-8' });
+		const content = await fs.readFile(dataPath, { encoding: 'utf-8' });
 		data[key] = JSON.parse(content).data;
 	});
 	await Promise.all(ps);
@@ -38,7 +36,7 @@ updateData();
 */
 
 const template = {
-	getBrief: async () => {
+	getBrief: async (location) => {
 		await updateData();
 		return {
 			text: '모닝 브리핑이 도착했습니다!',
@@ -71,7 +69,7 @@ const template = {
 					term: '🌡 기온',
 					content: {
 						type: 'text',
-						text: `*${data.weather.temperature}C*`,
+						text: `*${data.weather[location].temperature}C*`,
 						markdown: true,
 					},
 					accent: false,
@@ -81,7 +79,7 @@ const template = {
 					term: '🌂 강수',
 					content: {
 						type: 'text',
-						text: `*${data.weather.humidity}*`,
+						text: `*${data.weather[location].humidity}*`,
 						markdown: true,
 					},
 					accent: false,
@@ -99,7 +97,7 @@ const template = {
 					term: '🌬 미세',
 					content: {
 						type: 'text',
-						text: `*${data.air.micro_dust}*`,
+						text: `*${data.air[location].micro_dust}*`,
 						markdown: true,
 					},
 					accent: false,
@@ -109,7 +107,7 @@ const template = {
 					term: '초미세',
 					content: {
 						type: 'text',
-						text: `*${data.air.ultra_micro_dust}*`,
+						text: `*${data.air[location].ultra_micro_dust}*`,
 						markdown: true,
 					},
 					accent: false,
@@ -463,9 +461,9 @@ const template = {
 		};
 	},
 
-	getWeather: async () => {
+	getWeather: async (location) => {
 		await updateData();
-		let weather = data.weather;
+		let weather = data.weather[location];
 		return {
 			text: '오늘의 날씨 안내',
 			blocks: [
@@ -588,9 +586,9 @@ const template = {
 		};
 	},
 
-	getAir: async () => {
+	getAir: async (location) => {
 		await updateData();
-		let air = data.air;
+		let air = data.air[location];
 		return {
 			text: '오늘의 미세먼지 안내',
 			blocks: [
