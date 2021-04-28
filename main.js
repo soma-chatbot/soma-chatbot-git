@@ -67,6 +67,7 @@ app.post('/callback', async (req, res) => {
 	res.send({ res: 'ok' });
 });
 
+// 테스트 페이지 접근
 app.get('/', (req, res) => {
 	res.send(path.join(__dirname, 'public', 'index.js'));
 });
@@ -97,6 +98,7 @@ app.get('/brief', async (req, res) => {
 	res.send('ok');
 });
 
+// 테스트 페이지 작성
 app.post('/test', async (req, res) => {
 	try {
 		let { username, blocks } = req.body;
@@ -123,19 +125,6 @@ app.post('/chatbot', async (req, res) => {
 });
 
 app.get('/testModules', async (req, res) => {
-	// try{
-	// 	let user = users.filter(x => x.name == '황희영')[0];
-	// 	let conv = await work.openConversations(user);
-	// 	let blk = await template.getCovid()
-	// 	console.log(blk);
-	// 	if (user){
-	// 		let msgRet = await work.sendMessage(conv, blk);
-	// 		res.send(msgRet);
-	// 	} else {throw err}
-	// }
-	// catch (err){
-	// 	console.log(err.message)
-	// }
 	let blk = await template.getBrief();
 	await sendToAllUsers(blk);
 
@@ -152,6 +141,7 @@ app.get('/testModules', async (req, res) => {
 	await sendToAllUsers(blk);
 });
 
+// 특정 유저에게 브리핑 봇 보내기 /summonBot/{이름}
 app.get('/summonBot/:name', async (req, res) => {
 	try {
 		let user = users.filter(x => x.name == req.params.name)[0];

@@ -36,7 +36,6 @@ const template = {
 					text: '😄  안녕하세요 *Morning Breifing* 챗봇 입니다. 어떤 정보를 원하시나요?',
 					markdown: true,
 				},
-
 				{
 					type: 'text',
 					text:
