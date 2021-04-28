@@ -12,7 +12,9 @@ echo [3/4] News data has been crawled.
 python3 covid.py > covid.json
 echo [4/4] Covid data has been crawled.
 
-cat air.json | jq '.'
-cat weather.json | jq '.'
-cat news.json | jq '.'
-cat covid.json | jq '.'
+# Uncomment here to see decoded json files
+
+# cat air.json | jq '.'
+# cat weather.json | jq '.'
+# cat news.json | jq '.'
+# cat covid.json | jq '.'
