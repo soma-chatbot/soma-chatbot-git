@@ -121,6 +121,7 @@ app.post('/test', async (req, res) => {
 // https://www.notion.so/SW-12-485750b970e54c15adee96b539c6c127
 app.post('/chatbot', async (req, res) => {
 	await sendToAllUsers(template.getBrief())
+	res.send('success')
 })
 
 // 전체 모듈 테스트
