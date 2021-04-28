@@ -115,6 +115,13 @@ app.post('/test', async (req, res) => {
 	}
 });
 
+// 모든 유저에게 브리핑 봇 보내기 /chatbot
+// https://www.notion.so/SW-12-485750b970e54c15adee96b539c6c127
+app.post('/chatbot', async (req, res) => {
+	await sendToAllUsers(await template.getBrief());
+	res.send('success');
+});
+
 app.get('/testModules', async (req, res) => {
 	// try{
 	// 	let user = users.filter(x => x.name == '황희영')[0];
@@ -143,6 +150,21 @@ app.get('/testModules', async (req, res) => {
 
 	blk = await template.getAir();
 	await sendToAllUsers(blk);
+});
+
+app.get('/summonBot/:name', async (req, res) => {
+	try {
+		let user = users.filter(x => x.name == req.params.name)[0];
+		if (user) {
+			let conv = await work.openConversations(user);
+			let msgRet = await work.sendMessage(conv, await template.getBrief());
+			res.send(msgRet);
+		} else {
+			res.send('그런 유저가 없습니다.');
+		}
+	} catch (err) {
+		res.send({ 'state': '서버 내부 에러 발생', 'errMsg': err.message });
+	}
 });
 
 app.listen(80, () => {
