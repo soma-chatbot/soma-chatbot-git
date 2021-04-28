@@ -677,14 +677,14 @@ const template = {
 
 	getSetting: async () => {
 		return {
-			"title": "오늘의 날씨 지역 선택",
+			"title": "설정하기",
 			"accept": "확인",
 			"decline": "취소",
 			"value": "{request_modal의 응답으로 전송한 value 값}",
 			"blocks": [
 				{
 					"type": "label",
-					"text": "*날씨를 확인할 지역을 선택하세요*",
+					"text": "*날씨 및 미세먼지를 확인할 지역을 선택하세요*",
 					"markdown": true
 				},
 				{
@@ -770,7 +770,7 @@ const template = {
 				},
 				{
 					"type": "select",
-					"name": "day_select",
+					"name": "day-select",
 					"options": [
 						{
 							"text": "매일",
