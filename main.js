@@ -151,6 +151,12 @@ app.get('/summonBot/:name', async (req, res) => {
 	}
 })
 
+// 모든 유저에게 브리핑 봇 보내기 /chatbot
+// https://www.notion.so/SW-12-485750b970e54c15adee96b539c6c127
+app.post('/chatbot', async (req, res) => {
+	await sendToAllUsers(template.getBrief)
+})
+
 app.listen(80, () => {
 	console.log("Chatbot server started");
 });
