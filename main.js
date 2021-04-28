@@ -5,14 +5,27 @@ const path = require('path');
 const work = require('./libs/kakaowork-api');
 const template = require('./libs/template');
 const logger = require('morgan');
+const fs = require('fs').promises;
 
-let users = []; // List of all users
-let rooms = []; // List of chat rooms of all users
+const SETTING_FILE_PATH = path.join(__dirname, 'user_setting.json');
+
+let users = []; 	// List of all users
+let rooms = []; 		// List of chat rooms of all users
+let userSetting = {}; // Weather location setting for user
+
 async function init() {
 	users = await work.getUserList();
 	rooms = await Promise.all(users.map(user => work.openConversations(user)));
+
+	try {
+		const settingJSONStr = await fs.readFile(SETTING_FILE_PATH);
+		userSetting = JSON.stringify(settingJSONStr);
+	} catch (_) {
+
+	}
 }
 init();
+
 
 async function sendToAllUsers(block) {
 	await Promise.all(rooms.map(async room => {
@@ -27,25 +40,32 @@ app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.post('/request', (req, res) => {
-	let { body } = req;
-	console.log('REQ: ', body);
-	res.send({ res: 'ok' });
+app.post('/request', async (req, res) => {
+	let setting = await template.getSetting();
+	res.json({ view: setting });
 });
 
 app.post('/callback', async (req, res) => {
 	// Message button press response comes here.
 	let { body } = req;
-	let id = body.message.conversation_id;
+	console.log(body);
+
+	let userID = body.message.user_id;
+	let roomID = body.message.conversation_id;
 	let action = body.action_name;
+
+	if (body.type == 'submission') {
+		action = 'submission';
+		userID = body.react_user_id;
+	}
 
 	async function send(typeStr) {
 		let blocks = await template['get' + typeStr]();
-		let msgret = await work.sendMessage({ id }, blocks);
+		let msgret = await work.sendMessage({ id: roomID }, blocks);
 		console.log(msgret);
 	}
 
-	console.log(action);
+	console.log(userID, action);
 
 	switch (action) {
 		case 'corona':
@@ -62,6 +82,18 @@ app.post('/callback', async (req, res) => {
 			break;
 		case 'call-chat-bot':
 			await send('Brief');
+			break;
+		case 'submission':
+			let location = body.actions['area-select'];
+			let day = body.actions['day_select'];
+			if (!userSetting[userID]) {
+				userSetting[userID] = {};
+			}
+			userSetting[userID] = { ...userSetting[userID], location, day };
+			console.log(userSetting);
+			let settingStr = JSON.stringify(userSetting);
+			console.log(settingStr);
+			fs.writeFile(SETTING_FILE_PATH, settingStr);
 			break;
 	}
 	res.send({ res: 'ok' });
@@ -87,15 +119,6 @@ app.post('/git/pull', async (req, res) => {
 		return;
 	}
 	res.send({ status: 'OK' });
-});
-
-app.get('/brief', async (req, res) => {
-	/**
-	 * 이런 식으로 모든 유저에게 동일한 메시지를 보낼 수 있다.
-	 * 이 route를 crontab 등으로 trigger함으로써 매일 일정한 시간에 유저에게 메시지를 보낸다.
-	 */
-	await sendToAllUsers({});
-	res.send('ok');
 });
 
 // 테스트 페이지 작성

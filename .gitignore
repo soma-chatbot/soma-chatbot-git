@@ -3,3 +3,4 @@ secrets.js
 configs
 crawlers/*.json
 .vscode
+user_setting.json
