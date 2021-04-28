@@ -28,7 +28,7 @@ async function init() {
 	// If user setting file already exists, override it.
 	try {
 		const settingJSONStr = await fs.readFile(SETTING_FILE_PATH);
-		userSetting = { ...userSetting, ...JSON.stringify(settingJSONStr) };
+		userSetting = { ...userSetting, ...JSON.parse(settingJSONStr) };
 	} catch (_) {
 
 	}
@@ -96,9 +96,6 @@ app.post('/callback', async (req, res) => {
 		case 'submission':
 			let location = body.actions['area-select'];
 			let day = body.actions['day-select'];
-			if (!userSetting[userID]) {
-				userSetting[userID] = {};
-			}
 			userSetting[userID] = { ...userSetting[userID], location, day };
 			console.log(userSetting);
 			let settingStr = JSON.stringify(userSetting);
