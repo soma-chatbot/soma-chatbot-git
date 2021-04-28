@@ -117,6 +117,12 @@ app.post('/test', async (req, res) => {
 	}
 });
 
+// 모든 유저에게 브리핑 봇 보내기 /chatbot
+// https://www.notion.so/SW-12-485750b970e54c15adee96b539c6c127
+app.post('/chatbot', async (req, res) => {
+	await sendToAllUsers(template.getBrief())
+})
+
 // 전체 모듈 테스트
 app.get('/testModules', async (req, res) => {
 	let blk = await template.getBrief();
@@ -149,12 +155,6 @@ app.get('/summonBot/:name', async (req, res) => {
 	} catch (err) {
 		res.send({ 'state': '서버 내부 에러 발생', 'errMsg': err.message });
 	}
-})
-
-// 모든 유저에게 브리핑 봇 보내기 /chatbot
-// https://www.notion.so/SW-12-485750b970e54c15adee96b539c6c127
-app.post('/chatbot', async (req, res) => {
-	await sendToAllUsers(template.getBrief)
 })
 
 app.listen(80, () => {
