@@ -21,11 +21,27 @@ async function updateData() {
 }
 updateData();
 
+/*
+-----> 상황에 따른 사진 블록킷
+
+1. 아침 브리핑 메인 > 오늘의 날씨 > 헤더 밑 상단의 이미지
+
+- 맑음 : https://ifh.cc/g/KUhOmv.png
+- 구름많음 : https://ifh.cc/g/rXOB0W.png
+- 비옴 : https://ifh.cc/g/RWhaws.png
+
+2. 아침 브리핑 메인 > 미세먼지 > 헤더 및 2개 이미지
+
+- 좋음 : https://ifh.cc/g/OxiH3v.png
+- 보통 : https://ifh.cc/g/MZiGVu.png
+- 나쁨 : https://ifh.cc/g/bLtEWX.png
+*/
+
 const template = {
 	getBrief: async () => {
 		await updateData();
 		return {
-			text: "모닝 브리핑이 도착했습니다!",
+			text: '모닝 브리핑이 도착했습니다!',
 			blocks: [
 				{
 					type: 'image_link',
@@ -47,81 +63,81 @@ const template = {
 				},
 				{
 					type: 'text',
-					text: '　　　*🌤  오늘의 날씨 🌥*',
+					text: '*🌤  오늘의 날씨*',
 					markdown: true,
 				},
 				{
 					type: 'description',
-					term: '기온',
+					term: '🌡 기온',
 					content: {
 						type: 'text',
-						text: `${data.weather.temperature}C`,
+						text: `*${data.weather.temperature}C*`,
 						markdown: true,
 					},
-					accent: true,
+					accent: false,
 				},
 				{
 					type: 'description',
-					term: '강수확률',
+					term: '🌂 강수',
 					content: {
 						type: 'text',
-						text: `${data.weather.humidity}`,
+						text: `*${data.weather.humidity}*`,
 						markdown: true,
 					},
-					accent: true,
+					accent: false,
 				},
 				{
 					type: 'divider',
 				},
 				{
 					type: 'text',
-					text: '　　　　*🌫  미세먼지 🌫*',
+					text: '*🌫  미세먼지*',
 					markdown: true,
 				},
 				{
 					type: 'description',
-					term: '미세먼지',
+					term: '🌬 미세',
 					content: {
 						type: 'text',
-						text: `${data.air.micro_dust}`,
+						text: `*${data.air.micro_dust}*`,
 						markdown: true,
 					},
-					accent: true,
+					accent: false,
 				},
 				{
 					type: 'description',
 					term: '초미세',
 					content: {
 						type: 'text',
-						text: `${data.air.ultra_micro_dust}`,
+						text: `*${data.air.ultra_micro_dust}*`,
 						markdown: true,
 					},
-					accent: true,
+					accent: false,
 				},
 				{
 					type: 'divider',
 				},
 				{
 					type: 'text',
-					text: '　　*📈  코로나 확진자 수 📉*',
+					text: '*📈  코로나 확진자 수*',
 					markdown: true,
 				},
 				{
 					type: 'description',
-					term: '신규확진',
+					term: '😷 신규',
 					content: {
 						type: 'text',
-						text: data.covid.inside,
+						text: `🔺 *${data.covid.inside}*`,
 						markdown: true,
 					},
-					accent: true,
+					accent: false,
 				},
 				{
 					type: 'divider',
 				},
 				{
 					type: 'text',
-					text: '　　　*📋  뉴스 헤드라인 📋*',
+					text: '*📋  뉴스 헤드라인*',
 					markdown: true,
 				},
 				{
@@ -139,7 +155,7 @@ const template = {
 				},
 				{
 					type: 'text',
-					text: '　　　*🔎  자세히 보기 🔍*',
+					text: '*🔎  자세히 보기*',
 					markdown: true,
 				},
 				{
@@ -189,7 +205,7 @@ const template = {
 				},
 				{
 					type: 'button',
-					text: 'SETTING',
+					text: '설정하기',
 					style: 'default',
 					action_type: 'call_modal',
 					action_name: 'setting',
@@ -210,77 +226,48 @@ const template = {
 				},
 				{
 					type: 'text',
-					text: '　　　　　*일일 확진자*',
+					text: '*일일 확진자*',
 					markdown: true,
 				},
 				{
-					type: 'description',
-					term: '국내발생',
-					content: {
-						type: 'text',
-						text: data.covid.inside,
-						markdown: true,
-					},
-					accent: true,
+					type: 'text',
+					text: `🇰🇷  국내발생　*${data.covid.inside}*`,
+					markdown: true,
 				},
 				{
-					type: 'description',
-					term: '해외유입',
-					content: {
-						type: 'text',
-						text: data.covid.outside,
-						markdown: false,
-					},
-					accent: true,
+					type: 'text',
+					text: `🌏  해외유입　*${data.covid.outside}*`,
+					markdown: true,
 				},
 				{
 					type: 'divider',
 				},
 				{
 					type: 'text',
-					text: '　　　　　*국내 현황*',
+					text: '*국내 현황*',
 					markdown: true,
 				},
 				{
-					type: 'description',
-					term: '확진환자',
-					content: {
-						type: 'text',
-						text: data.covid.coronic,
-						markdown: false,
-					},
-					accent: true,
+					type: 'text',
+					text: `😷  확진환자　*${data.covid.coronic}*`,
+					markdown: true,
 				},
 				{
-					type: 'description',
-					term: '검사중',
-					content: {
-						type: 'text',
-						text: data.covid.check,
-						markdown: false,
-					},
-					accent: true,
+					type: 'text',
+					text: `⚠️  검사중　　*${data.covid.check}*`,
+					markdown: true,
 				},
 				{
-					type: 'description',
-					term: '격리해제',
-					content: {
-						type: 'text',
-						text: data.covid.free,
-						markdown: false,
-					},
-					accent: true,
+					type: 'text',
+					text: `✅  격리해제　*${data.covid.free}*`,
+					markdown: true,
 				},
 				{
-					type: 'description',
-					term: '사망',
-					content: {
-						type: 'text',
-						text: data.covid.death,
-						markdown: false,
-					},
-					accent: true,
+					type: 'text',
+					text: `🙏🏻  사망　　   *${data.covid.death}*`,
+					markdown: true,
 				},
+
 				{
 					type: 'divider',
 				},
@@ -292,7 +279,7 @@ const template = {
 							text: 'COVID-19 이동',
 							style: 'default',
 							action_type: 'open_inapp_browser',
-							action_name: 'go-fine-dust-site',
+							action_name: 'go-covid19-site',
 							value: 'http://ncov.mohw.go.kr/',
 						},
 						{
@@ -321,7 +308,7 @@ const template = {
 				},
 				{
 					type: 'text',
-					text: '　　　　　*🤦  정치  🤦‍♀️*',
+					text: '*🤦  정치  🤦‍♀️*',
 					markdown: true,
 				},
 				{
@@ -365,7 +352,7 @@ const template = {
 				},
 				{
 					type: 'text',
-					text: '　　　　　*💸   경제  💸*',
+					text: '*💸   경제  💸*',
 					markdown: true,
 				},
 				{
@@ -409,7 +396,7 @@ const template = {
 				},
 				{
 					type: 'text',
-					text: '　　　　　*🖥   IT/과학  🔬*',
+					text: '*🖥   IT/과학  🔬*',
 					markdown: true,
 				},
 				{
@@ -459,7 +446,7 @@ const template = {
 							text: '뉴스 이동',
 							style: 'default',
 							action_type: 'open_inapp_browser',
-							action_name: 'go-fine-dust-site',
+							action_name: 'go-news-site',
 							value: 'https://news.naver.com/',
 						},
 						{
@@ -486,85 +473,83 @@ const template = {
 					type: 'image_link',
 					url: 'https://ifh.cc/g/z1OQed.png',
 				},
-
-				{
-					type: 'text',
-					text: '　　　　*🌤 오늘의 날씨 🌥*',
-					markdown: true,
+				{	// 여기를 날씨에 맞게 수정하시면 됩니다
+					type: "image_link",
+					url: "https://ifh.cc/g/KUhOmv.png"
 				},
 				{
 					type: 'description',
 					term: '🌤 날씨',
 					content: {
 						type: 'text',
-						text: weather.weather,
+						text: `*${weather.weather}*`,
 						markdown: true,
 					},
-					accent: true,
+					accent: false,
 				},
 				{
 					type: 'description',
 					term: '🌡 기온',
 					content: {
 						type: 'text',
-						text: `${weather.temperature}C`,
+						text: `*${weather.temperature}C*`,
 						markdown: true,
 					},
-					accent: true,
+					accent: false,
 				},
 				{
 					type: 'description',
 					term: '👧 체감',
 					content: {
 						type: 'text',
-						text: `${weather.apparent_temperature}C`,
+						text: `*${weather.apparent_temperature}C*`,
 						markdown: true,
 					},
-					accent: true,
+					accent: false,
 				},
 				{
 					type: 'description',
 					term: '🔺 최고',
 					content: {
 						type: 'text',
-						text: `${weather.highest_temperature}C`,
+						text: `*${weather.highest_temperature}C*`,
 						markdown: true,
 					},
-					accent: true,
+					accent: false,
 				},
 				{
 					type: 'description',
 					term: '🔻 최저',
 					content: {
 						type: 'text',
-						text: `${weather.lowest_temperature}C`,
+						text: `*${weather.lowest_temperature}C*`,
 						markdown: true,
 					},
-					accent: true,
+					accent: false,
 				},
 				{
 					type: 'description',
 					term: '💦 습도',
 					content: {
 						type: 'text',
-						text: weather.humidity,
+						text: `*${weather.humidity}*`,
 						markdown: true,
 					},
-					accent: true,
+					accent: false,
 				},
 				{
 					type: 'description',
 					term: '🌂 강수',
 					content: {
 						type: 'text',
-						text: weather.precipitation_probability,
+						text: `*${weather.precipitation_probability}*`,
 						markdown: true,
 					},
-					accent: true,
+					accent: false,
 				},
 				{
 					type: 'text',
-					text: '13시에 비올 확률이 가장 높습니다',
+					text: '*_13시에 비올 확률이 가장 높습니다_*',
 					markdown: true,
 				},
 				{
@@ -572,7 +557,7 @@ const template = {
 				},
 				{
 					type: 'text',
-					text: '　🔈 업데이트 12:05 [기상청] 🔈',
+					text: '*🔈 업데이트 12:05 [기상청]*',
 					markdown: true,
 				},
 				{
@@ -615,35 +600,21 @@ const template = {
 				},
 				{
 					type: 'text',
-					text: `🌬 *미세먼지*　　　😄  ${air.micro_dust}`,
+					text: `🌬 미세　　　  *${air.micro_dust}*`,
+					markdown: true,
+				},
+				{	// 여기를 미세 먼지 상황에 따라 바꾸시면 됩니다
+					type: "image_link",
+					url: "https://ifh.cc/g/OxiH3v.png"
+				},
+				{
+					type: 'text',
+					text: `⬇ 가장 적은 시간　　　　*${air.lowest_micro_dust.hour}시*`,
 					markdown: true,
 				},
 				{
 					type: 'text',
-					text: `⬇ 가장 적은 시간　　　　${air.lowest_micro_dust.hour}시`,
-					markdown: true,
-				},
-				{
-					type: 'text',
-					text: `⬆ 가장 많은 시간　　　　${air.highest_micro_dust.hour}시`,
-					markdown: true,
-				},
-				{
-					type: 'divider',
-				},
-				{
-					type: 'text',
-					text: `💨 *초미세먼지*　　 😔  ${air.ultra_micro_dust}`,
-					markdown: true,
-				},
-				{
-					type: 'text',
-					text: `⬇ 가장 적은 시간　　　　${air.lowest_ultra_micro_dust.hour}`,
-					markdown: true,
-				},
-				{
-					type: 'text',
-					text: `⬆ 가장 많은 시간　　　　${air.highest_ultra_micro_dust.hour}`,
+					text: `⬆ 가장 많은 시간　　　　*${air.highest_micro_dust.hour}시*`,
 					markdown: true,
 				},
 				{
@@ -651,7 +622,29 @@ const template = {
 				},
 				{
 					type: 'text',
-					text: '　🔈 업데이트 12:05 [기상청] 🔈',
+					text: `💨 초미세　　  *${air.ultra_micro_dust}*`,
+					markdown: true,
+				},
+				{	// 여기를 초미세 먼지 상황에 따라 바꾸시면 됩니다
+					type: "image_link",
+					url: "https://ifh.cc/g/bLtEWX.png"
+				},
+				{
+					type: 'text',
+					text: `⬇ 가장 적은 시간　　　　*${air.lowest_ultra_micro_dust.hour}*`,
+					markdown: true,
+				},
+				{
+					type: 'text',
+					text: `⬆ 가장 많은 시간　　　　*${air.highest_ultra_micro_dust.hour}*`,
+					markdown: true,
+				},
+				{
+					type: 'divider',
+				},
+				{
+					type: 'text',
+					text: '*🔈 업데이트 12:05 [기상청]*',
 					markdown: true,
 				},
 				{
@@ -679,6 +672,119 @@ const template = {
 					],
 				},
 			],
+		};
+	},
+
+	getSetting: async () => {
+		return {
+			"title": "오늘의 날씨 지역 선택",
+			"accept": "확인",
+			"decline": "취소",
+			"value": "{request_modal의 응답으로 전송한 value 값}",
+			"blocks": [
+				{
+					"type": "label",
+					"text": "*날씨를 확인할 지역을 선택하세요*",
+					"markdown": true
+				},
+				{
+					"type": "select",
+					"name": "area-select",
+					"options": [
+						{
+							"text": "서울특별시",
+							"value": "09140550"
+						},
+						{
+							"text": "부산광역시",
+							"value": "08470690"
+						},
+						{
+							"text": "인천광역시",
+							"value": "11200510"
+						},
+						{
+							"text": "대구광역시",
+							"value": "06110517"
+						},
+						{
+							"text": "광주광역시",
+							"value": "05140120"
+						},
+						{
+							"text": "대전광역시",
+							"value": "07170630"
+						},
+						{
+							"text": "울산광역시",
+							"value": "10140510"
+						},
+						{
+							"text": "세종특별자치시",
+							"value": "17110250"
+						},
+						{
+							"text": "경기도",
+							"value": "02830410"
+						},
+						{
+							"text": "강원도",
+							"value": "01810350"
+						},
+						{
+							"text": "충청북도",
+							"value": "16760370"
+						},
+						{
+							"text": "충청남도",
+							"value": "15810320"
+						},
+						{
+							"text": "전라북도",
+							"value": "13750360"
+						},
+						{
+							"text": "전라남도",
+							"value": "12790330"
+						},
+						{
+							"text": "경상북도",
+							"value": "04170400"
+						},
+						{
+							"text": "경상남도",
+							"value": "03720415"
+						},
+						{
+							"text": "제주특별자치도",
+							"value": "14110630"
+						},
+					],
+					"required": true,
+					"placeholder": "지역을 선택해주세요"
+				},
+				{
+					"type": "label",
+					"text": "*Morning Breifing 챗봇 서비스를 이용하고 싶은 요일을 선택하세요*",
+					"markdown": true
+				},
+				{
+					"type": "select",
+					"name": "day_select",
+					"options": [
+						{
+							"text": "매일",
+							"value": "1"
+						},
+						{
+							"text": "평일만",
+							"value": "2"
+						}
+					],
+					"required": true,
+					"placeholder": "요일을 선택해주세요"
+				}
+			]
 		};
 	},
 };
