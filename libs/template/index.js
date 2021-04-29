@@ -555,7 +555,7 @@ const template = {
 				},
 				{
 					type: 'text',
-					text: '*🔈 업데이트 12:05 [기상청]*',
+					text: `*🔈 업데이트 ${weather.update_date} [네이버 날씨]*`,
 					markdown: true,
 				},
 				{
@@ -642,7 +642,7 @@ const template = {
 				},
 				{
 					type: 'text',
-					text: '*🔈 업데이트 12:05 [기상청]*',
+					text: `*🔈 업데이트 ${air.update_date} [한국환경공단]*`,
 					markdown: true,
 				},
 				{
