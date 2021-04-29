@@ -561,11 +561,12 @@ const template = {
 					},
 					accent: false,
 				},
-				{
-					type: 'text',
-					text: '*_13시에 비올 확률이 가장 높습니다_*',
-					markdown: true,
-				},
+				// 미구현
+				// {
+				// 	type: 'text',
+				// 	text: '*_13시에 비올 확률이 가장 높습니다_*',
+				// 	markdown: true,
+				// },
 				{
 					type: 'divider',
 				},
