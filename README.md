@@ -1,12 +1,12 @@
 # SWM MINI-PROJECT : Morning Breifing Chat-bot
 
 ## Contributor
-- [`권준호`](https://github.com/unknownpgr) : 팀장, 서버
-- [`김영배`](https://github.com/canoe726) : 블록킷, 리드미
-- [`박유천`](https://github.com/Park6000) : 크롤링
-- [`이도원`](https://github.com/2dowon) : 블록킷, 리드미
-- [`정용훈`](https://github.com/wjddydgns99) : 크롤링
-- [`황희영`](https://github.com/hehehwang) : 서버
+- [`권준호`](https://github.com/unknownpgr) : Leader, Server
+- [`김영배`](https://github.com/canoe726) : Block-kit, README
+- [`박유천`](https://github.com/Park6000) : Crawling
+- [`이도원`](https://github.com/2dowon) : Block-kit, README
+- [`정용훈`](https://github.com/wjddydgns99) : Crawling
+- [`황희영`](https://github.com/hehehwang) : Server
 
 
 ## Develop Process
