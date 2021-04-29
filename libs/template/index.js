@@ -464,6 +464,22 @@ const template = {
 	getWeather: async (location) => {
 		await updateData();
 		let weather = data.weather[location];
+		let weatherImg;
+		switch (weather.weather) {
+			case "맑음":
+				weatherImg = 'https://ifh.cc/g/KUhOmv.png';
+				break;
+			case "구름많음":
+				weatherImg = 'https://ifh.cc/g/rXOB0W.png';
+				break;
+			case "비옴":
+				weatherImg = 'https://ifh.cc/g/RWhaws.png';
+				break;
+			default:
+				weatherImg = 'https://ifh.cc/g/KUhOmv.png';
+				break;
+		}
+
 		return {
 			text: '오늘의 날씨 안내',
 			blocks: [
@@ -473,7 +489,7 @@ const template = {
 				},
 				{	// 여기를 날씨에 맞게 수정하시면 됩니다
 					type: "image_link",
-					url: "https://ifh.cc/g/KUhOmv.png"
+					url: weatherImg
 				},
 				{
 					type: 'description',
@@ -589,6 +605,42 @@ const template = {
 	getAir: async (location) => {
 		await updateData();
 		let air = data.air[location];
+		let microDustImg;
+		let ultraMicroDustImg;
+		switch (air.micro_dust) {
+			case "좋음":
+				microDustImg = 'https://ifh.cc/g/OxiH3v.png';
+				break;
+			case "보통":
+				microDustImg = 'https://ifh.cc/g/MZiGVu.png';
+				break;
+			case "나쁨":
+				microDustImg = 'https://ifh.cc/g/bLtEWX.png';
+				break;
+			case "매우나쁨":
+				microDustImg = 'https://ifh.cc/g/bLtEWX.png';
+				break;
+			default:
+				microDustImg = 'https://ifh.cc/g/OxiH3v.png';
+				break;
+		}
+		switch (air.ultra_micro_dust) {
+			case "좋음":
+				ultraMicroDustImg = 'https://ifh.cc/g/OxiH3v.png';
+				break;
+			case "보통":
+				ultraMicroDustImg = 'https://ifh.cc/g/MZiGVu.png';
+				break;
+			case "나쁨":
+				ultraMicroDustImg = 'https://ifh.cc/g/bLtEWX.png';
+				break;
+			case "매우나쁨":
+				ultraMicroDustImg = 'https://ifh.cc/g/bLtEWX.png';
+				break;
+			default:
+				ultraMicroDustImg = 'https://ifh.cc/g/OxiH3v.png';
+				break;
+		}
 		return {
 			text: '오늘의 미세먼지 안내',
 			blocks: [
@@ -603,7 +655,7 @@ const template = {
 				},
 				{	// 여기를 미세 먼지 상황에 따라 바꾸시면 됩니다
 					type: "image_link",
-					url: "https://ifh.cc/g/OxiH3v.png"
+					url: microDustImg
 				},
 				{
 					type: 'text',
@@ -625,16 +677,16 @@ const template = {
 				},
 				{	// 여기를 초미세 먼지 상황에 따라 바꾸시면 됩니다
 					type: "image_link",
-					url: "https://ifh.cc/g/bLtEWX.png"
+					url: ultraMicroDustImg
 				},
 				{
 					type: 'text',
-					text: `⬇ 가장 적은 시간　　　　*${air.lowest_ultra_micro_dust.hour}*`,
+					text: `⬇ 가장 적은 시간　　　　*${air.lowest_ultra_micro_dust.hour}시*`,
 					markdown: true,
 				},
 				{
 					type: 'text',
-					text: `⬆ 가장 많은 시간　　　　*${air.highest_ultra_micro_dust.hour}*`,
+					text: `⬆ 가장 많은 시간　　　　*${air.highest_ultra_micro_dust.hour}시*`,
 					markdown: true,
 				},
 				{
