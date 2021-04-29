@@ -24,6 +24,7 @@ async function init() {
 			day: 1
 		};
 	});
+	console.log(`Total ${users.length} users detected`)
 
 	// If user setting file already exists, override it.
 	try {
