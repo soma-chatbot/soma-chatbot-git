@@ -1,7 +1,5 @@
 # SWM MINI-PROJECT : Morning Breifing Chat-bot
 
-소프트웨어마에스트로 미니프로젝트 챗봇 만들기
-
 ## Contributor
 - [`권준호`](https://github.com/unknownpgr) : 팀장, 서버
 - [`김영배`](https://github.com/canoe726) : 블록킷, 리드미
