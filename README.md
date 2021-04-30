@@ -74,9 +74,9 @@
 > 아침브리핑 메인 | 아침브리핑 설정 화면
 
 <div style="display: inline-block; vertical-align: top;">
-  <img style="display: inline-block; vertical-align: top;" width="215" height="470" alt="아침브리핑 메인1" src="https://user-images.githubusercontent.com/36183001/116345869-f30d7800-a823-11eb-89dd-311170d0ac81.png">
+  <img style="display: inline-block; vertical-align: top;" width="215" alt="아침브리핑 메인1" src="https://user-images.githubusercontent.com/36183001/116345869-f30d7800-a823-11eb-89dd-311170d0ac81.png">
   &nbsp;
-  <img style="display: inline-block; vertical-align: top;" width="215" height="470" alt="아침브리핑 메인2" src="https://user-images.githubusercontent.com/36183001/116345871-f3a60e80-a823-11eb-84b1-6270d6a1009d.png">
+  <img style="display: inline-block; vertical-align: top;" width="215" alt="아침브리핑 메인2" src="https://user-images.githubusercontent.com/36183001/116345871-f3a60e80-a823-11eb-84b1-6270d6a1009d.png">
   &nbsp;
   &nbsp;
   <img style="display: inline-block; vertical-align: top;" width="300" alt="설정하기" src="https://user-images.githubusercontent.com/36183001/116347338-f9e9ba00-a826-11eb-9e4f-be9a83740283.png">
@@ -85,23 +85,23 @@
 
 > 오늘의 날씨 | 미세먼지 화면
 
-<div>
-  <img width="215" height="470" alt="오늘의 날씨" src="https://user-images.githubusercontent.com/36183001/116345872-f43ea500-a823-11eb-9f7b-b358dddd5ef9.png">
+<div style="display: inline-block; vertical-align: top;">
+  <img style="display: inline-block; vertical-align: top;" width="215" alt="오늘의 날씨" src="https://user-images.githubusercontent.com/36183001/116345872-f43ea500-a823-11eb-9f7b-b358dddd5ef9.png">
   &nbsp;
   &nbsp;
-  <img width="215" height="470" alt="미세먼지 1" src="https://user-images.githubusercontent.com/36183001/116345864-f1dc4b00-a823-11eb-873c-65b3db378d5d.png">
+  <img style="display: inline-block; vertical-align: top;" width="215" alt="미세먼지 1" src="https://user-images.githubusercontent.com/36183001/116345864-f1dc4b00-a823-11eb-873c-65b3db378d5d.png">
   &nbsp;
-  <img width="215" height="470" alt="미세먼지 2" src="https://user-images.githubusercontent.com/36183001/116345868-f274e180-a823-11eb-9709-ad5fd8673ad1.png">
+  <img style="display: inline-block; vertical-align: top;" width="215" alt="미세먼지 2" src="https://user-images.githubusercontent.com/36183001/116345868-f274e180-a823-11eb-9709-ad5fd8673ad1.png">
 </div>
 <br>
 
 
 > 코로나 | 뉴스 화면
-<div>
-  <img width="215" height="470" alt="코로나" src="https://user-images.githubusercontent.com/36183001/116345874-f4d73b80-a823-11eb-8617-fda6f25e78af.png">
+<div style="display: inline-block; vertical-align: top;">
+  <img style="display: inline-block; vertical-align: top;" width="215" alt="코로나" src="https://user-images.githubusercontent.com/36183001/116345874-f4d73b80-a823-11eb-8617-fda6f25e78af.png">
   &nbsp;
   &nbsp;
-  <img width="215" height="470" alt="뉴스" src="https://user-images.githubusercontent.com/36183001/116345856-eee15a80-a823-11eb-9ea5-d6d010fd4609.png">
+  <img style="display: inline-block; vertical-align: top;" width="215" alt="뉴스" src="https://user-images.githubusercontent.com/36183001/116345856-eee15a80-a823-11eb-9ea5-d6d010fd4609.png">
 </div>
 <br>
 
@@ -110,7 +110,7 @@
 
 1. 크롤러 제작
 
-- 오늘의 날씨, 미세먼지 : Python ''를 사용하여 네이버 날씨 페이지에서 각 지역에 대한 날씨 및 미세먼지에 대한 정보를 가져옵니다.
+- 오늘의 날씨, 미세먼지 : 네이버 날씨 페이지에서 각 지역에 대한 날씨 및 미세먼지에 대한 정보를 가져옵니다.
 
 - 코로나 상황판 : 네이버 검색창에 '코로나 현황'을 검색한 창에서 1.확진환자 2.격리해제 3.사망자 4.검사진행 와 각각의 일일 변화량, 그리고 일일확진자(국내발생, 해외유입)을 가져옵니다.
 
@@ -118,17 +118,17 @@
 
 > 크롤링 예제
 
-<div>
-  <img width="450" alt="코로나 크롤링" src="https://user-images.githubusercontent.com/36183001/116346359-0cfb8a80-a825-11eb-8227-6ba09427c62a.PNG">
+<div style="display: inline-block; vertical-align: top;">
+  <img style="display: inline-block; vertical-align: top;" width="450" alt="코로나 크롤링" src="https://user-images.githubusercontent.com/36183001/116346359-0cfb8a80-a825-11eb-8227-6ba09427c62a.PNG">
   &nbsp;
-  <img width="250" alt="뉴스 크롤링" src="https://user-images.githubusercontent.com/36183001/116346362-0e2cb780-a825-11eb-9f23-309891200508.PNG">
+  <img style="display: inline-block; vertical-align: top;" width="250" alt="뉴스 크롤링" src="https://user-images.githubusercontent.com/36183001/116346362-0e2cb780-a825-11eb-9f23-309891200508.PNG">
 </div>
 <br>
 
 
 2. 크롤러 동작 프로세스
 
-- Beautiful Soup → 네이버 웹 페이지 접속 → 검색 창에서 검색 및 헤드라인 정보 크롤링 → JSON 형태로 구름 IDE에 저장
+- Python 의 Beautiful Soup 라이브러리 사용 → 네이버 웹 페이지 접속 → 검색 창에서 검색 및 헤드라인 정보 크롤링 → JSON 형태로 구름 IDE에 저장
 
 
 3. 사용한 기술스택
