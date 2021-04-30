@@ -79,7 +79,7 @@
   <img style="display: inline-block; vertical-align: top;" width="215" alt="아침브리핑 메인2" src="https://user-images.githubusercontent.com/36183001/116345871-f3a60e80-a823-11eb-84b1-6270d6a1009d.png">
   &nbsp;
   &nbsp;
-  <img style="display: inline-block; vertical-align: top;" width="300" alt="설정하기" src="https://user-images.githubusercontent.com/36183001/116347338-f9e9ba00-a826-11eb-9e4f-be9a83740283.png">
+  <img style="display: inline-block; vertical-align: top;" width="215" alt="설정하기" src="https://user-images.githubusercontent.com/36183001/116347338-f9e9ba00-a826-11eb-9e4f-be9a83740283.png">
 </div>
 <br>
 
