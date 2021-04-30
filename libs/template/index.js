@@ -706,11 +706,11 @@ const template = {
 					elements: [
 						{
 							type: 'button',
-							text: '한국환경공단 이동',
+							text: '네이버 날씨 이동',
 							style: 'default',
 							action_type: 'open_inapp_browser',
 							action_name: 'go-fine-dust-site',
-							value: 'https://www.keco.or.kr/kr/main/index.do',
+							value: air.url,
 						},
 						{
 							type: 'button',
