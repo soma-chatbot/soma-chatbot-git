@@ -106,6 +106,9 @@
 <br>
 
 
+<hr>
+
+
 ### 크롤링
 
 1. 크롤러 제작
@@ -134,6 +137,9 @@
 3. 사용한 기술스택
 
 <img alt="Python" src ="https://img.shields.io/badge/Python-3776AB.svg?&style=for-the-badge&logo=Python&logoColor=white"/> <img alt="goormIDE" src ="https://img.shields.io/badge/GoormIDE-0F54BB.svg?&style=for-the-badge&logo=&logoColor=white"/> <img alt="KakaoWork" src ="https://img.shields.io/badge/KakaoWork-FFCD00.svg?&style=for-the-badge&logo=Kakao&logoColor=000000"/>
+
+
+<hr>
 
 
 ### 서버 구현
@@ -168,6 +174,10 @@
 <img src="./imgs/tester.png" width="600px">
 
 위 페이지에서 워크스페이스 내에 메시지를 보내고 싶은 사람의 이름과 보낼 블럭킷 `JSON`을 입력한 후, 전송 버튼을 누르면 메시지가 전송된 후 서버로부터의 응답을 아래에 표시해줍니다.
+
+
+<hr>
+
 
 ### 개발 환경
 
