@@ -1,5 +1,7 @@
 # SWM MINI-PROJECT : Morning briefing Chat-bot
 
+소프트웨어 마에스트로 12기 미니프로젝트 `챗봇 만들기`
+
 ## Contributor
 - [`권준호`](https://github.com/unknownpgr) : Leader, Server
 - [`김영배`](https://github.com/canoe726) : Block-kit, README
