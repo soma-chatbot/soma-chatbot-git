@@ -47,13 +47,13 @@ const template = {
 				},
 				{
 					type: 'text',
-					text: '😄  안녕하세요 *Morning Breifing* 챗봇 입니다. 어떤 정보를 원하시나요?',
+					text: '😄  안녕하세요 *Morning briefing* 챗봇 입니다. 어떤 정보를 원하시나요?',
 					markdown: true,
 				},
 				{
 					type: 'text',
 					text:
-						'✋  Morning Breifing은 *오늘의 날씨*, *미세먼지*, *코로나 확진자 수*, *뉴스 헤드라인* 4가지 종류의 데이터를 제공하고 있습니다.',
+						'✋  Morning briefing은 *오늘의 날씨*, *미세먼지*, *코로나 확진자 수*, *뉴스 헤드라인* 4가지 종류의 데이터를 제공하고 있습니다.',
 					markdown: true,
 				},
 				{
@@ -816,7 +816,7 @@ const template = {
 				},
 				{
 					"type": "label",
-					"text": "*Morning Breifing 챗봇 서비스를 이용하고 싶은 요일을 선택하세요*",
+					"text": "*Morning briefing 챗봇 서비스를 이용하고 싶은 요일을 선택하세요*",
 					"markdown": true
 				},
 				{

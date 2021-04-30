@@ -1,4 +1,4 @@
-# SWM MINI-PROJECT : Morning Breifing Chat-bot
+# SWM MINI-PROJECT : Morning briefing Chat-bot
 
 ## Contributor
 - [`권준호`](https://github.com/unknownpgr) : Leader, Server
