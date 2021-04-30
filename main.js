@@ -39,13 +39,16 @@ const app = express();
 app.use(logger(':remote-addr - :remote-user [:date[iso]] ":method :url HTTP/:http-version" :status :res[content-length]'));
 app.use(express.json());
 
+// 정적 파일 서비스
 app.use(express.static(path.join(__dirname, 'public')));
 
+// 카카오워크 모달 응답 콜백
 app.post('/request', async (req, res) => {
 	let setting = await template.getSetting();
 	res.json({ view: setting });
 });
 
+// 카카오워크 버튼 콜백
 app.post('/callback', async (req, res) => {
 	// Message button press response comes here.
 	let { body } = req;
@@ -92,11 +95,12 @@ app.post('/callback', async (req, res) => {
 	res.send({ res: 'ok' });
 });
 
-// 테스트 페이지 접근
+// 테스트 페이지 서비스
 app.get('/', (req, res) => {
 	res.send(path.join(__dirname, 'public', 'index.js'));
 });
 
+// 깃허브 Webhook push 이벤트 콜백
 app.post('/git/pull', async (req, res) => {
 	console.log('Git pull requested.');
 	try {
@@ -114,7 +118,7 @@ app.post('/git/pull', async (req, res) => {
 	res.send({ status: 'OK' });
 });
 
-// 테스트 페이지 테스트 호출 함수
+// 테스트 페이지 테스트 `전송` 버튼 콜백
 app.post('/test', async (req, res) => {
 	try {
 		let { username, blocks } = req.body;
@@ -136,10 +140,24 @@ app.post('/test', async (req, res) => {
 // 모든 유저에게 브리핑 봇 보내기 /chatbot
 // https://www.notion.so/SW-12-485750b970e54c15adee96b539c6c127
 app.post('/chatbot', async (req, res) => {
+	let n = new Date().getDay();
+	let isWeekend = (n === 0) || (n === 6);
+	/*
+	n = 현재 요일
+	0 = 일요일
+	1 = 월요일
+	...
+	6 = 토요일
+	*/
+
 	let result = await Promise.all(users.map(async user => {
 		try {
+			let setting = userSetting[user.id];
+
+			// 평일만 메시지를 받기로 설정한 유저는 오늘이 주말일 경우 메시지를 보내지 않는다.
+			if ((setting.day === '2') && isWeekend) return null;
 			let conv = await work.openConversations(user);
-			let msgRet = await work.sendMessage(conv, await template.getBrief(userSetting[user.id].location));
+			let msgRet = await work.sendMessage(conv, await template.getBrief(setting.location));
 			return msgRet;
 		} catch (err) {
 			return err;
