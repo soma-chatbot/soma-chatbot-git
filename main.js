@@ -9,13 +9,11 @@ const fs = require('fs').promises;
 
 const SETTING_FILE_PATH = path.join(__dirname, 'user_setting.json');
 
-let users = []; 	// List of all users
-let rooms = []; 		// List of chat rooms of all users
-let userSetting = {}; // Weather location setting for user
+let users = [];			// List of all users
+let userSetting = {}; 	// Weather location setting for user
 
 async function init() {
 	users = await work.getUserList();
-	rooms = await Promise.all(users.map(user => work.openConversations(user)));
 
 	// Initialize user setting
 	users.forEach(user => {
@@ -24,7 +22,7 @@ async function init() {
 			day: 1
 		};
 	});
-	console.log(`Total ${users.length} users detected`)
+	console.log(`Total ${users.length} users detected`);
 
 	// If user setting file already exists, override it.
 	try {
@@ -35,13 +33,6 @@ async function init() {
 	}
 }
 init();
-
-
-async function sendToAllUsers(block) {
-	await Promise.all(rooms.map(async room => {
-		await work.sendMessage(room, block);
-	}));
-}
 
 const app = express();
 
@@ -71,6 +62,7 @@ app.post('/callback', async (req, res) => {
 		let [typeStr, ...params] = args;
 		let blocks = await template['get' + typeStr](...params);
 		let msgret = await work.sendMessage({ id: roomID }, blocks);
+		return msgret;
 	}
 
 	switch (action) {
@@ -122,7 +114,7 @@ app.post('/git/pull', async (req, res) => {
 	res.send({ status: 'OK' });
 });
 
-// 테스트 페이지 작성
+// 테스트 페이지 테스트 호출 함수
 app.post('/test', async (req, res) => {
 	try {
 		let { username, blocks } = req.body;
@@ -144,25 +136,16 @@ app.post('/test', async (req, res) => {
 // 모든 유저에게 브리핑 봇 보내기 /chatbot
 // https://www.notion.so/SW-12-485750b970e54c15adee96b539c6c127
 app.post('/chatbot', async (req, res) => {
-	await sendToAllUsers(await template.getBrief());
-	res.send('success');
-});
-
-app.get('/testModules', async (req, res) => {
-	let blk = await template.getBrief();
-	await sendToAllUsers(blk);
-
-	blk = await template.getCovid();
-	await sendToAllUsers(blk);
-
-	blk = await template.getNews();
-	await sendToAllUsers(blk);
-
-	blk = await template.getWeather();
-	await sendToAllUsers(blk);
-
-	blk = await template.getAir();
-	await sendToAllUsers(blk);
+	let result = await Promise.all(users.map(async user => {
+		try {
+			let conv = await work.openConversations(user);
+			let msgRet = await work.sendMessage(conv, await template.getBrief(userSetting[user.id].location));
+			return msgRet;
+		} catch (err) {
+			return err;
+		}
+	}));
+	res.send(result);
 });
 
 // 특정 유저에게 브리핑 봇 보내기 /summonBot/{이름}
