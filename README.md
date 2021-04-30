@@ -150,12 +150,18 @@
 
 3. 블록킷 에러 핸들링
    1. 블록킷 빌더(https://www.kakaowork.com/block-kit-builder)로 작성된 블록과 실제 수신된 메시지에 차이가 발생했습니다. (이미지)
+
+<div>
+<img src="./imgs/work-hope.png" height="500px">
+&nbsp;
+<img src="./imgs/work-despair.png" height="500px">
+</div>
+
       차이점:
       1. 이모지 흑백
       2. 태그 무시
    2. 해당 버그를 리포트한 후, 실제 보여지는 블록을 시뮬레이션 하기 위한 테스트 페이지를 작성했습니다.
-      (테스트 페이지 스크린샷)
-4. 
+<img src="./imgs/tester.png" width="600px">
 
 ### 개발 환경
 
